@@ -7,7 +7,7 @@ import { AvailableModel, ClientOptions } from "./model";
 import { LLMClient } from "../lib/llm/LLMClient";
 
 export interface ConstructorParams {
-  env: "LOCAL" | "BROWSERBASE";
+  env: "LOCAL" | "BROWSERBASE" | "ANON";
   apiKey?: string;
   projectId?: string;
   verbose?: 0 | 1 | 2;
