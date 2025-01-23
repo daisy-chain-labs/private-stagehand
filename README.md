@@ -35,7 +35,7 @@
 
 ---
 
-Stagehand is the easiest way to build browser automations. It is fully compatible with [Playwright](https://playwright.dev/), offering three simple AI APIs (`act`, `extract`, and `observe`) on top of the base Playwright `Page` class that provide the building blocks for web automation via natural language. 
+Stagehand is the easiest way to build browser automations. It is fully compatible with [Playwright](https://playwright.dev/), offering three simple AI APIs (`act`, `extract`, and `observe`) on top of the base Playwright `Page` class that provide the building blocks for web automation via natural language.
 
 Here's a sample of what you can do with Stagehand:
 
@@ -63,8 +63,8 @@ const { description } = await page.extract({
 
 While there's no limit to what you could instruct Stagehand to do, our primitives allow you to control how much you want to leave to an AI. It works best when your code is a sequence of atomic actions. Instead of writing a single script for a single website, Stagehand allows you to write durable, self-healing, and repeatable web automation workflows that actually work.
 
-> [!NOTE] 
-> `Stagehand` is currently available as an early release, and we're actively seeking feedback from the community. Please join our [Slack community](https://stagehand.dev/slack) to stay updated on the latest developments and provide feedback.
+> [!NOTE]
+> `Stagehand` is currently available as an early release, and we're actively seeking feedback from the community. Please join our [Slack community](https://join.slack.com/t/stagehand-dev/shared_invite/zt-2tdncfgkk-fF8y5U0uJzR2y2_M9c9OJA) to stay updated on the latest developments and provide feedback.
 
 ## Documentation
 
@@ -116,12 +116,30 @@ cp .env.example .env
 nano .env # Edit the .env file to add API keys
 ```
 
+## Anon-specific features
+
+### Env Vars
+
+- `ANON_API_KEY` - required
+- `ANON_APP_USER_ID` - optional but potentially useful for session persistence
+- `ANON_APPS` - optional but potentially useful for session persistence
+- `ANON_PROVIDER` - can be `"browserbase"`, `"rebrowser"`, or `"undetect"`
+
+Note that not all providers have consistent behavior
+
+set them in `.env`; see `.env.example`
+
+### TODO
+
+- use rebrowser patches (?)
+- liveStreamingUrl plumbing?
+
 ## Contributing
 
-> [!NOTE]  
-> We highly value contributions to Stagehand! For questions or support, please join our [Slack community](https://stagehand.dev/slack).
+> [!NOTE]
+> We highly value contributions to Stagehand! For questions or support, please join our [Slack community](https://join.slack.com/t/stagehand-dev/shared_invite/zt-2tdncfgkk-fF8y5U0uJzR2y2_M9c9OJA).
 
-At a high level, we're focused on improving reliability, speed, and cost in that order of priority. If you're interested in contributing, we strongly recommend reaching out to [Anirudh Kamath](https://x.com/kamathematic) or [Paul Klein](https://x.com/pk_iv) in our [Slack community](https://stagehand.dev/slack) before starting to ensure that your contribution aligns with our goals.
+At a high level, we're focused on improving reliability, speed, and cost in that order of priority. If you're interested in contributing, we strongly recommend reaching out to [Anirudh Kamath](https://x.com/kamathematic) or [Paul Klein](https://x.com/pk_iv) in our [Slack community](https://join.slack.com/t/stagehand-dev/shared_invite/zt-2tdncfgkk-fF8y5U0uJzR2y2_M9c9OJA) before starting to ensure that your contribution aligns with our goals.
 
 For more information, please see our [Contributing Guide](https://docs.stagehand.dev/contributions/contributing).
 

@@ -1,3 +1,4 @@
+import { AnonApiClient } from "@anon/fern-sdk";
 import { Browserbase } from "@browserbasehq/sdk";
 import { chromium } from "@playwright/test";
 import { randomUUID } from "crypto";
@@ -33,6 +34,8 @@ import { LLMClient } from "./llm/LLMClient";
 import { LLMProvider } from "./llm/LLMProvider";
 import { logLineToString, isRunningInBun } from "./utils";
 
+const environment: "development" | "local" = "development";
+
 dotenv.config({ path: ".env" });
 
 const DEFAULT_MODEL_NAME = "gpt-4o";
@@ -46,7 +49,7 @@ const BROWSERBASE_REGION_DOMAIN = {
 async function getBrowser(
   apiKey: string | undefined,
   projectId: string | undefined,
-  env: "LOCAL" | "BROWSERBASE" = "LOCAL",
+  env: "LOCAL" | "BROWSERBASE" | "ANON" = "ANON",
   headless: boolean = false,
   logger: (message: LogLine) => void,
   browserbaseSessionCreateParams?: Browserbase.Sessions.SessionCreateParams,
@@ -199,6 +202,28 @@ async function getBrowser(
     const context = browser.contexts()[0];
 
     return { browser, context, debugUrl, sessionUrl, sessionId, env };
+  } else if (env === "ANON") {
+    // Pull out Anon + browser session config
+    const anonApiKey = process.env.ANON_API_KEY;
+    const appUserId = process.env.ANON_APP_USER_ID ?? "default-user"
+    const apps: string[] = JSON.parse(process.env.ANON_APPS ?? "[]")
+    const provider = process.env.ANON_PROVIDER
+    const protocol = environment === "local" ? "http" : "https";
+    const baseUrl = `${protocol}://svc.${environment}.anon.com`;
+    const anon = new AnonApiClient({
+      token: anonApiKey,
+      anonSdkClientId: "",
+      environment: baseUrl,
+    });
+    const { cdpUrl } = await anon.run.createCdpUrl({
+      apps,
+      appUserId,
+      proxy: false,
+      ...(provider ? { provider } : {})
+    });
+    const browser = await chromium.connectOverCDP(cdpUrl);
+    const context = browser.contexts()[0];
+    return { context, env }; // TODO add browser?
   } else {
     logger({
       category: "init",
@@ -351,7 +376,7 @@ const defaultLogger = async (logLine: LogLine) => {
 export class Stagehand {
   private stagehandPage!: StagehandPage;
   private stagehandContext!: StagehandContext;
-  private intEnv: "LOCAL" | "BROWSERBASE";
+  private intEnv: "LOCAL" | "BROWSERBASE" | "ANON";
 
   public browserbaseSessionID?: string;
   public readonly domSettleTimeoutMs: number;
@@ -467,9 +492,12 @@ export class Stagehand {
     return this.stagehandPage.page;
   }
 
-  public get env(): "LOCAL" | "BROWSERBASE" {
+  // pretty shitty code
+  public get env(): "LOCAL" | "BROWSERBASE" | "ANON" {
     if (this.intEnv === "BROWSERBASE" && this.apiKey && this.projectId) {
       return "BROWSERBASE";
+    } else if (process.env.ANON_API_KEY) {
+      return "ANON"
     }
     return "LOCAL";
   }

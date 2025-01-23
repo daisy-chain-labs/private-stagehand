@@ -8,7 +8,7 @@ import { LLMClient } from "../lib/llm/LLMClient";
 import { Cookie } from "@playwright/test";
 
 export interface ConstructorParams {
-  env: "LOCAL" | "BROWSERBASE";
+  env: "LOCAL" | "BROWSERBASE" | "ANON";
   apiKey?: string;
   projectId?: string;
   verbose?: 0 | 1 | 2;
