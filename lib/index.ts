@@ -216,11 +216,25 @@ async function getBrowser(
 
     return { browser, context, debugUrl, sessionUrl, sessionId, env };
   } else if (env === "ANON") {
+    const emptyToNull = (s: string): string | null => (s === "" ? null : s);
     // Pull out Anon + browser session config
     const anonApiKey = process.env.ANON_API_KEY;
-    const appUserId = process.env.ANON_APP_USER_ID ?? "default-user";
-    const apps: string[] = JSON.parse(process.env.ANON_APPS ?? "[]");
-    const provider = process.env.ANON_PROVIDER;
+    const appUserId =
+      emptyToNull(process.env.ANON_APP_USER_ID) ?? "default-user";
+    const apps: string[] = JSON.parse(
+      emptyToNull(process.env.ANON_APPS) ?? "[]",
+    );
+    const validateProvider = (provider: string) => {
+      switch (provider) {
+        case "browserbase":
+        case "rebrowser":
+        case "undetect":
+          return provider;
+        default:
+          throw new Error(`unrecognized ANON_PROVIDER ${provider}`);
+      }
+    };
+    const provider = validateProvider(process.env.ANON_PROVIDER);
     const protocol = environment === "local" ? "http" : "https";
     const baseUrl = `${protocol}://svc.${environment}.anon.com`;
     const anon = new AnonApiClient({
