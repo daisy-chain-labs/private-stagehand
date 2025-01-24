@@ -205,9 +205,9 @@ async function getBrowser(
   } else if (env === "ANON") {
     // Pull out Anon + browser session config
     const anonApiKey = process.env.ANON_API_KEY;
-    const appUserId = process.env.ANON_APP_USER_ID ?? "default-user"
-    const apps: string[] = JSON.parse(process.env.ANON_APPS ?? "[]")
-    const provider = process.env.ANON_PROVIDER
+    const appUserId = process.env.ANON_APP_USER_ID ?? "default-user";
+    const apps: string[] = JSON.parse(process.env.ANON_APPS ?? "[]");
+    const provider = process.env.ANON_PROVIDER;
     const protocol = environment === "local" ? "http" : "https";
     const baseUrl = `${protocol}://svc.${environment}.anon.com`;
     const anon = new AnonApiClient({
@@ -215,12 +215,14 @@ async function getBrowser(
       anonSdkClientId: "",
       environment: baseUrl,
     });
-    const { cdpUrl } = await anon.run.createCdpUrl({
+    const { cdpUrl, liveStreamingUrl } = await anon.run.createCdpUrl({
       apps,
       appUserId,
       proxy: false,
-      ...(provider ? { provider } : {})
+      ...(provider ? { provider } : {}),
     });
+
+    console.log(`Anon live streaming url: ${liveStreamingUrl}`);
     const browser = await chromium.connectOverCDP(cdpUrl);
     const context = browser.contexts()[0];
     return { context, env }; // TODO add browser?
@@ -497,7 +499,7 @@ export class Stagehand {
     if (this.intEnv === "BROWSERBASE" && this.apiKey && this.projectId) {
       return "BROWSERBASE";
     } else if (process.env.ANON_API_KEY) {
-      return "ANON"
+      return "ANON";
     }
     return "LOCAL";
   }
