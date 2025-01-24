@@ -34,9 +34,22 @@ import { LLMClient } from "./llm/LLMClient";
 import { LLMProvider } from "./llm/LLMProvider";
 import { logLineToString, isRunningInBun } from "./utils";
 
-const environment: "development" | "local" = "development";
-
 dotenv.config({ path: ".env" });
+
+type AnonEnv = "development" | "local";
+
+const validateAnonEnv = (env: string): AnonEnv => {
+  switch (env) {
+    case "development":
+    case "local":
+      return env;
+    default:
+      throw new Error(`unrecognized ANON_ENV ${env}`);
+  }
+};
+
+const environment: AnonEnv =
+  validateAnonEnv(process.env.ANON_ENV) ?? "development";
 
 const DEFAULT_MODEL_NAME = "gpt-4o";
 const BROWSERBASE_REGION_DOMAIN = {
