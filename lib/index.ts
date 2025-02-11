@@ -68,6 +68,7 @@ async function getBrowser(
   browserbaseSessionCreateParams?: Browserbase.Sessions.SessionCreateParams,
   browserbaseSessionID?: string,
   localBrowserLaunchOptions?: LocalBrowserLaunchOptions,
+  cdpUrlOverride?: string,
 ): Promise<BrowserResult> {
   if (env === "BROWSERBASE") {
     if (!apiKey) {
@@ -216,14 +217,18 @@ async function getBrowser(
 
     return { browser, context, debugUrl, sessionUrl, sessionId, env };
   } else if (env === "ANON") {
+    if (cdpUrlOverride) {
+      // If CDP URL is provided directly, use it
+      const browser = await chromium.connectOverCDP(cdpUrlOverride);
+      const context = browser.contexts()[0];
+      return { context, env };
+    }
+
+    // Fallback to existing Anon SDK logic if no CDP URL provided
     const emptyToNull = (s: string): string | null => (s === "" ? null : s);
-    // Pull out Anon + browser session config
     const anonApiKey = process.env.ANON_API_KEY;
-    const appUserId =
-      emptyToNull(process.env.ANON_APP_USER_ID) ?? "default-user";
-    const apps: string[] = JSON.parse(
-      emptyToNull(process.env.ANON_APPS) ?? "[]",
-    );
+    const appUserId = emptyToNull(process.env.ANON_APP_USER_ID) ?? "default-user";
+    const apps: string[] = JSON.parse(emptyToNull(process.env.ANON_APPS) ?? "[]");
     const validateProvider = (provider: string) => {
       switch (provider) {
         case "browserbase":
@@ -252,7 +257,7 @@ async function getBrowser(
     console.log(`Anon live streaming url: ${liveStreamingUrl}`);
     const browser = await chromium.connectOverCDP(cdpUrl);
     const context = browser.contexts()[0];
-    return { context, env }; // TODO add browser?
+    return { context, env };
   } else {
     logger({
       category: "init",
@@ -417,9 +422,9 @@ export class Stagehand {
 
   private apiKey: string | undefined;
   private projectId: string | undefined;
-  // We want external logger to accept async functions
   private externalLogger?: (logLine: LogLine) => void;
   private browserbaseSessionCreateParams?: Browserbase.Sessions.SessionCreateParams;
+  private cdpUrl?: string;
   public variables: { [key: string]: unknown };
   private contextPath?: string;
   private llmClient: LLMClient;
@@ -453,6 +458,7 @@ export class Stagehand {
       localBrowserLaunchOptions,
       selfHeal = true,
       waitForCaptchaSolves = false,
+      cdpUrl,
     }: ConstructorParams = {
       env: "BROWSERBASE",
     },
@@ -468,6 +474,7 @@ export class Stagehand {
     this.projectId = projectId ?? process.env.BROWSERBASE_PROJECT_ID;
     this.verbose = verbose ?? 0;
     this.debugDom = debugDom ?? false;
+    this.cdpUrl = cdpUrl;
     if (llmClient) {
       this.llmClient = llmClient;
     } else {
@@ -590,6 +597,7 @@ export class Stagehand {
         this.browserbaseSessionCreateParams,
         this.browserbaseSessionID,
         this.localBrowserLaunchOptions,
+        this.cdpUrl,
       ).catch((e) => {
         console.error("Error in init:", e);
         const br: BrowserResult = {

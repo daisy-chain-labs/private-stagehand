@@ -54,17 +54,17 @@ export class StagehandPage {
     this.intPage = Object.assign(page, {
       act: () => {
         throw new Error(
-          "You seem to be calling `act` on a page in an uninitialized `Stagehand` object. Ensure you are running `await stagehand.init()` on the Stagehand object before referencing the `page` object.",
+          "No LLM API key or LLM Client configured. An LLM API key or a custom LLM Client is required to use act, extract, or observe.",
         );
       },
       extract: () => {
         throw new Error(
-          "You seem to be calling `extract` on a page in an uninitialized `Stagehand` object. Ensure you are running `await stagehand.init()` on the Stagehand object before referencing the `page` object.",
+          "No LLM API key or LLM Client configured. An LLM API key or a custom LLM Client is required to use act, extract, or observe.",
         );
       },
       observe: () => {
         throw new Error(
-          "You seem to be calling `observe` on a page in an uninitialized `Stagehand` object. Ensure you are running `await stagehand.init()` on the Stagehand object before referencing the `page` object.",
+          "No LLM API key or LLM Client configured. An LLM API key or a custom LLM Client is required to use act, extract, or observe.",
         );
       },
       on: () => {
@@ -255,14 +255,6 @@ export class StagehandPage {
               return this.observe(options);
             };
           }
-        } else {
-          if (prop === "act" || prop === "extract" || prop === "observe") {
-            return () => {
-              throw new Error(
-                "No LLM API key or LLM Client configured. An LLM API key or a custom LLM Client is required to use act, extract, or observe.",
-              );
-            };
-          }
         }
 
         if (prop === "on") {
@@ -421,6 +413,11 @@ export class StagehandPage {
   async act(
     actionOrOptions: string | ActOptions | ObserveResult,
   ): Promise<ActResult> {
+    if (!this.llmClient) {
+      throw new Error(
+        "No LLM API key or LLM Client configured. An LLM API key or a custom LLM Client is required to use act, extract, or observe.",
+      );
+    }
     if (!this.actHandler) {
       throw new Error("Act handler not initialized");
     }
@@ -545,6 +542,11 @@ export class StagehandPage {
   async extract<T extends z.AnyZodObject = typeof defaultExtractSchema>(
     instructionOrOptions: string | ExtractOptions<T>,
   ): Promise<ExtractResult<T>> {
+    if (!this.llmClient) {
+      throw new Error(
+        "No LLM API key or LLM Client configured. An LLM API key or a custom LLM Client is required to use act, extract, or observe.",
+      );
+    }
     if (!this.extractHandler) {
       throw new Error("Extract handler not initialized");
     }
@@ -634,6 +636,11 @@ export class StagehandPage {
   async observe(
     instructionOrOptions?: string | ObserveOptions,
   ): Promise<ObserveResult[]> {
+    if (!this.llmClient) {
+      throw new Error(
+        "No LLM API key or LLM Client configured. An LLM API key or a custom LLM Client is required to use act, extract, or observe.",
+      );
+    }
     if (!this.observeHandler) {
       throw new Error("Observe handler not initialized");
     }
