@@ -1,21 +1,15 @@
-node_modules/
+# New additions from the code block
 /test-results/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
 screenshot.png
-.DS_STORE
-.cache/
-.env
 downloads/
-dist/
 evals/**/public
 lib/dom/build/
 evals/public
-*.tgz
-evals/playground.ts
 tmp/
 eval-summary.json
 pnpm-lock.yaml
 evals/deterministic/tests/BrowserContext/tmp-test.har
-.npmrc
+.npmrc%
