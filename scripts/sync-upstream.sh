@@ -30,7 +30,7 @@ git rebase upstream/main
 echo "🛠️ Applying our customizations..."
 
 # Update package.json with our private fork details
-npm pkg set name="@anon-dot-com/private-stagehand" \
+npm pkg set name="@anon/private-stagehand" \
     repository.url="git+https://github.com/anon-dot-com/private-stagehand.git" \
     bugs.url="https://github.com/anon-dot-com/private-stagehand/issues" \
     homepage="https://github.com/anon-dot-com/private-stagehand#readme"
