@@ -35,7 +35,8 @@
   },
   "files": [
     "dist/**",
-    "lib/**"
+    "lib/**",
+    "types/**"
   ],
   "keywords": [],
   "author": "Browserbase",
