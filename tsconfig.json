@@ -10,11 +10,16 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*", "lib/types/*"],
+      "*": ["node_modules/*", "types/*"],  // Changed from lib/types to types
       "@/*": ["./*"]
     },
     "skipLibCheck": true,
-    "declaration": true
+    "declaration": true,
+    "rootDir": "."  // Added to ensure proper structure in dist
   },
+  "include": [  // Added include to explicitly specify what to compile
+    "lib/**/*",
+    "types/**/*"
+  ],
   "exclude": ["node_modules", "dist", ".eslintrc.cjs"]
 }
