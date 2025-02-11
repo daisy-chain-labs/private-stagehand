@@ -26,6 +26,11 @@ export interface ConstructorParams {
    * Instructions for stagehand.
    */
   systemPrompt?: string;
+  /**
+   * CDP URL to connect to an existing browser instance.
+   * If provided in ANON mode, this will be used instead of creating a new browser.
+   */
+  cdpUrl?: string;
 }
 
 export interface InitOptions {

@@ -1,7 +1,15 @@
 import { default as DefaultStagehandConfig } from "@/stagehand.config";
 import type { ConstructorParams } from "@/dist";
 import dotenv from "dotenv";
-dotenv.config({ path: "../../.env" });
+import path from "path";
+
+// Load environment variables from the root .env file
+dotenv.config({ path: path.resolve(__dirname, "../../.env") });
+
+// Set default ANON_ENV to development if not set
+if (!process.env.ANON_ENV) {
+  process.env.ANON_ENV = "development";
+}
 
 const StagehandConfig: ConstructorParams = {
   ...DefaultStagehandConfig,
