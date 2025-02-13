@@ -17,28 +17,35 @@ export declare function getScrollableElements(topN?: number): HTMLElement[];
  * @param topN (optional) integer limit on how many scrollable elements to process
  * @returns string[] list of XPaths (1 for each scrollable element)
  */
-export declare function getScrollableElementXpaths(topN?: number): Promise<string[]>;
+export declare function getScrollableElementXpaths(
+  topN?: number,
+): Promise<string[]>;
 export declare function processDom(chunksSeen: Array<number>): Promise<{
-    outputString: string;
-    selectorMap: Record<number, string[]>;
-    chunk: number;
-    chunks: number[];
+  outputString: string;
+  selectorMap: Record<number, string[]>;
+  chunk: number;
+  chunks: number[];
 }>;
 export declare function processAllOfDom(): Promise<{
-    outputString: string;
-    selectorMap: {};
+  outputString: string;
+  selectorMap: {};
 }>;
-export declare function processElements(chunk: number, scrollToChunk?: boolean, indexOffset?: number, container?: StagehandContainer): Promise<{
-    outputString: string;
-    selectorMap: Record<number, string[]>;
+export declare function processElements(
+  chunk: number,
+  scrollToChunk?: boolean,
+  indexOffset?: number,
+  container?: StagehandContainer,
+): Promise<{
+  outputString: string;
+  selectorMap: Record<number, string[]>;
 }>;
 export declare function storeDOM(): string;
 export declare function restoreDOM(storedDOM: string): void;
 export declare function createTextBoundingBoxes(): void;
 export declare function getElementBoundingBoxes(xpath: string): Array<{
-    text: string;
-    top: number;
-    left: number;
-    width: number;
-    height: number;
+  text: string;
+  top: number;
+  left: number;
+  width: number;
+  height: number;
 }>;

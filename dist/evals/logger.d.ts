@@ -13,38 +13,38 @@ import { Stagehand, LogLine } from "@/dist";
  *   included in evaluation output.
  */
 export declare class EvalLogger {
-    logs: LogLineEval[];
-    stagehand?: Stagehand;
-    constructor();
-    /**
-     * init:
-     * Associates this logger with a given Stagehand instance.
-     * This allows the logger to provide additional context if needed.
-     */
-    init(stagehand: Stagehand): void;
-    /**
-     * log:
-     * Logs a message at the default (info) level.
-     * Uses `logLineToString` to produce a readable output on the console,
-     * and then stores the parsed log line in `this.logs`.
-     */
-    log(logLine: LogLine): void;
-    /**
-     * error:
-     * Logs an error message with `console.error` and stores it.
-     * Useful for capturing and differentiating error-level logs.
-     */
-    error(logLine: LogLine): void;
-    /**
-     * warn:
-     * Logs a warning message with `console.warn` and stores it.
-     * Helps differentiate warnings from regular info logs.
-     */
-    warn(logLine: LogLine): void;
-    /**
-     * getLogs:
-     * Retrieves the array of stored log lines.
-     * Useful for returning logs after a task completes, for analysis or debugging.
-     */
-    getLogs(): LogLineEval[];
+  logs: LogLineEval[];
+  stagehand?: Stagehand;
+  constructor();
+  /**
+   * init:
+   * Associates this logger with a given Stagehand instance.
+   * This allows the logger to provide additional context if needed.
+   */
+  init(stagehand: Stagehand): void;
+  /**
+   * log:
+   * Logs a message at the default (info) level.
+   * Uses `logLineToString` to produce a readable output on the console,
+   * and then stores the parsed log line in `this.logs`.
+   */
+  log(logLine: LogLine): void;
+  /**
+   * error:
+   * Logs an error message with `console.error` and stores it.
+   * Useful for capturing and differentiating error-level logs.
+   */
+  error(logLine: LogLine): void;
+  /**
+   * warn:
+   * Logs a warning message with `console.warn` and stores it.
+   * Helps differentiate warnings from regular info logs.
+   */
+  warn(logLine: LogLine): void;
+  /**
+   * getLogs:
+   * Retrieves the array of stored log lines.
+   * Useful for returning logs after a task completes, for analysis or debugging.
+   */
+  getLogs(): LogLineEval[];
 }
