@@ -11,4 +11,6 @@ export declare function escapeXPathString(value: string): string;
  * @param documentOverride - Optional document override.
  * @returns An object containing both XPaths.
  */
-export declare function generateXPathsForElement(element: ChildNode): Promise<string[]>;
+export declare function generateXPathsForElement(
+  element: ChildNode,
+): Promise<string[]>;
