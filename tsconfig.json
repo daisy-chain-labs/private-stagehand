@@ -10,14 +10,15 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*", "types/*"],  // Changed from lib/types to types
+      "*": ["node_modules/*", "types/*"], // Changed from lib/types to types
       "@/*": ["./*"]
     },
     "skipLibCheck": true,
     "declaration": true,
-    "rootDir": "."  // Added to ensure proper structure in dist
+    "rootDir": "." // Added to ensure proper structure in dist
   },
-  "include": [  // Added include to explicitly specify what to compile
+  "include": [
+    // Added include to explicitly specify what to compile
     "lib/**/*",
     "types/**/*"
   ],
