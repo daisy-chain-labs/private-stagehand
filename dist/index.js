@@ -5107,7 +5107,9 @@ function getBrowser(apiKey, projectId, env = "ANON", headless = false, logger, b
       const emptyToNull = (s) => s === "" ? null : s;
       const anonApiKey = process.env.ANON_API_KEY;
       const appUserId = (_a2 = emptyToNull(process.env.ANON_APP_USER_ID)) != null ? _a2 : "default-user";
-      const apps = JSON.parse((_b = emptyToNull(process.env.ANON_APPS)) != null ? _b : "[]");
+      const apps = JSON.parse(
+        (_b = emptyToNull(process.env.ANON_APPS)) != null ? _b : "[]"
+      );
       const validateProvider = (provider2) => {
         switch (provider2) {
           case "browserbase":
@@ -5314,7 +5316,7 @@ var Stagehand = class {
       const { context, debugUrl, sessionUrl, contextPath, sessionId, env } = yield getBrowser(
         this.apiKey,
         this.projectId,
-        this.env,
+        "ANON",
         this.headless,
         this.logger,
         this.browserbaseSessionCreateParams,

@@ -107,7 +107,10 @@ export class StagehandPage {
             return result;
           };
 
-        if (!this.llmClient && (prop === "act" || prop === "extract" || prop === "observe")) {
+        if (
+          !this.llmClient &&
+          (prop === "act" || prop === "extract" || prop === "observe")
+        ) {
           return () => {
             throw new Error(
               "No LLM API key or LLM Client configured. An LLM API key or a custom LLM Client is required to use act, extract, or observe.",
