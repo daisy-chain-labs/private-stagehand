@@ -227,8 +227,11 @@ async function getBrowser(
     // Fallback to existing Anon SDK logic if no CDP URL provided
     const emptyToNull = (s: string): string | null => (s === "" ? null : s);
     const anonApiKey = process.env.ANON_API_KEY;
-    const appUserId = emptyToNull(process.env.ANON_APP_USER_ID) ?? "default-user";
-    const apps: string[] = JSON.parse(emptyToNull(process.env.ANON_APPS) ?? "[]");
+    const appUserId =
+      emptyToNull(process.env.ANON_APP_USER_ID) ?? "default-user";
+    const apps: string[] = JSON.parse(
+      emptyToNull(process.env.ANON_APPS) ?? "[]",
+    );
     const validateProvider = (provider: string) => {
       switch (provider) {
         case "browserbase":
@@ -591,7 +594,7 @@ export class Stagehand {
       await getBrowser(
         this.apiKey,
         this.projectId,
-        this.env,
+        "ANON",
         this.headless,
         this.logger,
         this.browserbaseSessionCreateParams,
