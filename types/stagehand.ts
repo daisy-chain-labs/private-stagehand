@@ -29,7 +29,6 @@ export interface ConstructorParams {
    */
   systemPrompt?: string;
   /**
-<<<<<<< HEAD
    * Offload Stagehand method calls to the Stagehand API.
    */
   useAPI?: boolean;
@@ -41,12 +40,11 @@ export interface ConstructorParams {
    */
   waitForCaptchaSolves?: boolean;
   localBrowserLaunchOptions?: LocalBrowserLaunchOptions;
-=======
+  /*
    * CDP URL to connect to an existing browser instance.
    * If provided in ANON mode, this will be used instead of creating a new browser.
    */
   cdpUrl?: string;
->>>>>>> 3f30a267 (feat: add CDP URL support for direct browser connection)
 }
 
 export interface InitOptions {
