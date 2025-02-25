@@ -75,10 +75,10 @@ async function getBrowser(
       logger({
         category: "init",
         message:
-          "BROWSERBASE_API_KEY is required to use BROWSERBASE env. Defaulting to LOCAL.",
+          "BROWSERBASE_API_KEY is required to use BROWSERBASE env. Defaulting to ANON.",
         level: 0,
       });
-      env = "LOCAL";
+      env = "ANON";
     }
     if (!projectId) {
       logger({
@@ -463,7 +463,7 @@ export class Stagehand {
       waitForCaptchaSolves = false,
       cdpUrl,
     }: ConstructorParams = {
-      env: "BROWSERBASE",
+      env: "ANON",
     },
   ) {
     this.externalLogger = logger || defaultLogger;
@@ -594,7 +594,7 @@ export class Stagehand {
       await getBrowser(
         this.apiKey,
         this.projectId,
-        "ANON",
+        this.env,
         this.headless,
         this.logger,
         this.browserbaseSessionCreateParams,
