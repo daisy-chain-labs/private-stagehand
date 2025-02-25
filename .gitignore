@@ -12,3 +12,5 @@ tmp/
 eval-summary.json
 pnpm-lock.yaml
 evals/deterministic/tests/BrowserContext/tmp-test.har
+node_modules
+.DS_Store
