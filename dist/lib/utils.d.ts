@@ -18,17 +18,13 @@ export declare function generateId(operation: string): string;
  * @param pageWidth - The width of the page in pixels, used to normalize positions.
  * @returns A string representing the text layout of the page.
  */
-export declare function formatText(
-  textAnnotations: TextAnnotation[],
-  pageWidth: number,
-): string;
+export declare function formatText(textAnnotations: TextAnnotation[], pageWidth: number): string;
 export declare function logLineToString(logLine: LogLine): string;
-export declare function validateZodSchema(
-  schema: z.ZodTypeAny,
-  data: unknown,
-): boolean;
-export declare function drawObserveOverlay(
-  page: Page,
-  results: ObserveResult[],
-): Promise<void>;
+export declare function validateZodSchema(schema: z.ZodTypeAny, data: unknown): boolean;
+export declare function drawObserveOverlay(page: Page, results: ObserveResult[]): Promise<void>;
 export declare function clearOverlays(page: Page): Promise<void>;
+/**
+ * Detects if the code is running in the Bun runtime environment.
+ * @returns {boolean} True if running in Bun, false otherwise.
+ */
+export declare function isRunningInBun(): boolean;

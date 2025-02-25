@@ -2,6 +2,4 @@ import { StagehandContainer } from "./StagehandContainer";
 /**
  * Decide which container to create.
  */
-export declare function createStagehandContainer(
-  obj: Window | HTMLElement,
-): StagehandContainer;
+export declare function createStagehandContainer(obj: Window | HTMLElement): StagehandContainer;

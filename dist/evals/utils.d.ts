@@ -39,13 +39,9 @@ export declare function normalizeString(str: string): string;
  * This function is useful for tasks where exact string matching is too strict,
  * allowing for fuzzy matching that tolerates minor differences in formatting or spelling.
  */
-export declare function compareStrings(
-  actual: string,
-  expected: string,
-  similarityThreshold?: number,
-): {
-  similarity: number;
-  meetsThreshold: boolean;
+export declare function compareStrings(actual: string, expected: string, similarityThreshold?: number): {
+    similarity: number;
+    meetsThreshold: boolean;
 };
 /**
  * generateTimestamp:
@@ -60,13 +56,9 @@ export declare function generateTimestamp(): string;
  * the environment (e.g., dev or CI), and the current timestamp.
  * This is used to label the output files and directories.
  */
-export declare function generateExperimentName({
-  evalName,
-  category,
-  environment,
-}: {
-  evalName?: string;
-  category?: string;
-  environment: string;
+export declare function generateExperimentName({ evalName, category, environment, }: {
+    evalName?: string;
+    category?: string;
+    environment: string;
 }): string;
 export declare function logLineToString(logLine: LogLine): string;
